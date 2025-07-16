@@ -1,6 +1,8 @@
-# The script should accept a JSON file with questions for the survey and a text file with a list of email addresses.
+"""The script accepts a JSON file with questions for the survey."""
+"""It creates survey using API request and JSON data."""
+
+
 import requests, json, sys
-from pprint import pprint
 
 try:
     filename=sys.argv[1]
@@ -88,10 +90,6 @@ survey_data = {
     "title": survey_name,
     "pages": pages_list
 }
-
-print("============================================== OUTPUT SURVEY ==========================================================")
-pprint(survey_data)
-print("============================================== OUTPUT SURVEY ==========================================================")
 
 url = "https://api.surveymonkey.com/v3/surveys"
 

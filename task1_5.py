@@ -1,8 +1,11 @@
+"""This module show statistics about physical machine."""
+
 import sys, platform, os
 import psutil, requests
 
 
 def print_usage():
+    """This function shows usage of this module."""
     print("Usage: python3 task1_4.py [-d] [-m] [-c] [-u] [-l] [-i].")
     print('''   -d for distribution information,
                 -m for memory information, 
@@ -23,7 +26,8 @@ for argum in file_args:
         mem_total = mem.total / 1073741824
         mem_used = round( mem.used / 1073741824, 2 )
         mem_free = round( mem.free / 1073741824, 2 )
-        print(f"Memory information:\t\tTotal {mem_total} GB, Used {mem_used} GB, Free {mem_free} GB")
+        print(f"Memory information:\t\tTotal {mem_total} GB" \
+              f", Used {mem_used} GB, Free {mem_free} GB")
 
     elif argum == "-c":
         model_proc=platform.processor()
@@ -31,7 +35,8 @@ for argum in file_args:
         freq_current = psutil.cpu_freq().current
         freq_min = psutil.cpu_freq().min
         freq_max = psutil.cpu_freq().max
-        print(f"CPU information:\t\tModel {model_proc}, Cores number {cores}, Current frequency {freq_current} MHz,")
+        print(f"CPU information:\t\tModel {model_proc}, Cores number {cores}"
+              f", Current frequency {freq_current} MHz,")
         print(f"\t\t\t\t Minimum frequency {freq_min} MHz, Maximum Freuency {freq_max}")
 
     elif argum == "-u":
@@ -42,5 +47,5 @@ for argum in file_args:
         print(f"Load average information:\t1 min {la1}, 5 min {la5}, 15 min {la15}")
 
     elif argum == "-i":
-        public_ip = requests.get('https://api.ipify.org').text
+        public_ip = requests.get('https://api.ipify.org', timeout=5).text
         print(f"Public IP is:\t\t\t{public_ip}")

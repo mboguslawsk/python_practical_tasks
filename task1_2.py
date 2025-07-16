@@ -1,3 +1,5 @@
+"""This module sorts provided list and print out metadata about it."""
+
 import sys
 
 user_input = input("Please enter a list of numbers separated by commas (e.g., 1, 2, 43, 12, 4):\n")

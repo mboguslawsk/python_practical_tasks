@@ -1,5 +1,6 @@
+"""This module counts number of agents and number of requests they made."""
+
 import sys, os, re
-from pprint import pprint
 
 list_of_agents={}
 
@@ -7,7 +8,8 @@ try:
     filename=sys.argv[1]
 except IndexError:
     print("Usage: python3 task1_3.py <filename>.")
-    print("Tip: You can use the 'access.log.5' file as an example; it is included in the provided materials")
+    print("Tip: You can use the 'access.log.5' file as an example; " \
+                "it is included in the provided materials")
 
 if not os.path.exists(filename):
     print(f"File '{filename}' does not exists.")
@@ -17,7 +19,7 @@ with open(filename, "r") as file:
     for line in file:
         curr_agent = line.split(" -")[0]
         request_cmd = re.search(r'"\w+ /', line)
-        if not request_cmd == None:
+        if not request_cmd is None:
             request_cmd = re.search(r'\w+', request_cmd.group()).group()
 
         if request_cmd:
@@ -31,7 +33,6 @@ with open(filename, "r") as file:
         else:
             list_of_agents[curr_agent]= {}
 
-        
 print(f"\nTotal number of unique agents is: {len(list_of_agents.keys())}\n\n")
 
 for key, value in list_of_agents.items():

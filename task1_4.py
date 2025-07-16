@@ -1,5 +1,6 @@
-import sys, os, re
-from pprint import pprint
+"""This module counts number of characters in the string."""
+
+import sys
 
 list_of_symbols={}
 

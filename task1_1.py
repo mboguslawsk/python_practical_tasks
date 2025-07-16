@@ -1,6 +1,9 @@
+"""This module contains functionality that print out extension of provided filename"""
+
 import sys
 
 class ExtensionError(Exception):
+    """Handles the custom classname ExtensionError."""
     pass
 
 
@@ -12,5 +15,5 @@ except IndexError:
 if "." not in FILENAME:
     raise ExtensionError(f"Provided filename '{FILENAME}' doesn't contain extension.")
 else:
-    print(f"File extension is .{FILENAME.split(".")[1]}")
-
+    print(f"File extension is .{FILENAME.split('.')[1]}")
+    
