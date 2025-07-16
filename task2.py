@@ -1,8 +1,14 @@
 # The script should accept a JSON file with questions for the survey and a text file with a list of email addresses.
-import requests
-import http.client
+import requests, json, sys
+from pprint import pprint
 
-filename="secrets.txt"
+try:
+    filename=sys.argv[1]
+except IndexError:
+    print("Usage: python3 task2.py <filename>.")
+    print("Tip: You can use the 'secrets.txt' file as an example; it is included in the provided materials")
+
+
 with open(filename, "r") as file:
     for line in file:
         ACCESS_TOKEN=line.split('"')[1]
@@ -13,44 +19,79 @@ headers = {
 }
 
 
-survey_data = {
-    "title": "My Sample Survey",
-    "pages": [
-        {
-            "title": "Page 1",
-            "questions": [
+def create_questions_string_json(input_json_list, question_str, answers_list):
+    new_question = {
+        "headings": [
+            {
+                "heading": question_str
+            }
+        ],
+        "family": "single_choice",
+        "subtype": "vertical",
+        "answers": {
+            "choices":[
                 {
-                    "headings": [
-                        {
-                            "heading": "Which monkey would you rather have as a pet?"
-                        }
-                    ],
-                    "position": 1,
-                    "family": "single_choice",
-                    "subtype": "vertical",
-                    "answers": {
-                        "choices":[
-                            {
-                                "text": "Capuchin"
-                            },
-                            {
-                                "text": "Mandrill"
-                            },
-                        ],
-                        "other":[
-                                {
-                                    "text": "Other",
-                                    "num_chars": 100,
-                                    "num_lines": 3
-                                }
-                        ]
-                    }
+                    "text": answers_list[0]
+                },
+                {
+                    "text": answers_list[1]
+                },
+                {
+                    "text": answers_list[2]
+                }
+            ],
+            "other":[
+                {
+                    "text": "Other",
+                    "num_chars": 100,
+                    "num_lines": 3
                 }
             ]
         }
-    ]
+    }
+    input_json_list.append(new_question)
+
+
+def create_page_json(pages_list, questions_list, page_nr):
+    new_page = {
+        "title": page_nr,
+        "questions": questions_list
+    }
+    pages_list.append(new_page)
+
+
+    
+with open("task2_survey.json", "r") as f:
+    data = json.load(f)
+
+survey_name = list(data.keys())[0]
+string_question = ""
+answers_list = []
+pages_list = []
+
+for page in list(data[survey_name].keys()):
+    
+    questions_list_for_page = []
+    
+    for question_num, metadata in data[survey_name][page].items():
+        for item, item_text in metadata.items():
+            if isinstance(item_text, list):
+                answers_list = item_text
+            else:
+                string_question = item_text
+        create_questions_string_json(questions_list_for_page, string_question, answers_list)
+    
+    create_page_json(pages_list, questions_list_for_page, page)
+
+
+survey_data = {
+    "title": survey_name,
+    "pages": pages_list
 }
 
+print("============================================== OUTPUT SURVEY ==========================================================")
+pprint(survey_data)
+print("============================================== OUTPUT SURVEY ==========================================================")
 
 url = "https://api.surveymonkey.com/v3/surveys"
 
@@ -62,22 +103,5 @@ if response.status_code == 201:
     print(json.dumps(survey, indent=2))
 else:
     print(f"Failed to create survey: {response.status_code}")
-    print(response.text)
+    print(response.json())
 
-
-# conn = http.client.HTTPSConnection("api.surveymonkey.com")
-
-# payload = "{\"title\":\"GD SURVEY BM\",\"from_template_id\":\"\",\"from_survey_id\":\"\",\"from_team_template_id\":\"\",\"nickname\":\"My Survey\",\"language\":\"en\",\"buttons_text\":{\"next_button\":\"string\",\"prev_button\":\"string\",\"exit_button\":\"string\",\"done_button\":\"string\"},\"custom_variables\":{},\"footer\":true,\"folder_id\":\"\",\"theme_id\":1506280,\"quiz_options\":{\"is_quiz_mode\":true,\"default_question_feedback\":{\"correct_text\":\"string\",\"incorrect_text\":\"string\",\"partial_text\":\"string\"},\"show_results_type\":\"string\",\"feedback\":{\"ranges_type\":\"string\",\"ranges\":[{\"min\":0,\"max\":0,\"message\":\"string\"}]}},\"pages\":[{\"questions\":[\"See formatting question types for more details\"]}]}"
-
-# headers = {
-#     'Content-Type': "application/json",
-#     'Accept': "application/json",
-#     'Authorization': f"Bearer {ACCESS_TOKEN}"
-#     }
-
-# conn.request("POST", "/v3/surveys", payload, headers)
-
-# res = conn.getresponse()
-# data = res.read()
-
-# print(data.decode("utf-8"))

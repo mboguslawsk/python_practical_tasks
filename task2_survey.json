@@ -1,0 +1,72 @@
+{
+   "Grid Survey BM Python": {
+      "First Page 'Interesting questions'": {
+          "Question1_Name": {
+              "Description" : "Description of question 1 ?",
+              "Answers" : [
+                  "Answer1 for Q1",
+                  "Answer2 for Q1",
+                  "Answer3 for Q1"
+              ]
+          },
+          "Question2_Name": {
+              "Description" : "Description of question 2 ?",
+              "Answers" : [
+                  "Answer1 for Q2",
+                  "Answer2 for Q2",
+                  "Answer3 for Q2"
+              ]
+          },
+          "Question3_Name": {
+              "Description" : "Description of question 3 ?",
+              "Answers" : [
+                  "Answer1 for Q3",
+                  "Answer2 for Q3",
+                  "Answer3 for Q3"
+              ]
+          },
+          "Question4_Name": {
+              "Description" : "Description of question 4 ?",
+              "Answers" : [
+                  "Answer1 for Q4",
+                  "Answer2 for Q4",
+                  "Answer3 for Q4"
+              ]
+          }
+      },
+      "Second Page 'Boring questions'": {
+          "Boring1": {
+              "Description" : "Description of boring 1 ?",
+              "Answers" : [
+                  "Answer1 for Q1",
+                  "Answer2 for Q1",
+                  "Answer3 for Q1"
+              ]
+          },
+          "Boring2": {
+              "Description" : "Description of boring 2 ?",
+              "Answers" : [
+                  "Answer1 for Q2",
+                  "Answer2 for Q2",
+                  "Answer3 for Q2"
+              ]
+          },
+          "Boring3": {
+              "Description" : "Description of boring 3 ?",
+              "Answers" : [
+                  "Answer1 for Q3",
+                  "Answer2 for Q3",
+                  "Answer3 for Q3"
+              ]
+          },
+          "Boring4": {
+              "Description" : "Description of boring 4 ?",
+              "Answers" : [
+                  "Answer1 for Q4",
+                  "Answer2 for Q4",
+                  "Answer3 for Q4"
+              ]
+          }
+      }
+   }
+}
