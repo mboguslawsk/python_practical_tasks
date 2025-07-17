@@ -6,20 +6,24 @@ import psutil, requests
 
 def print_usage():
     """This function shows usage of this module."""
-    print("Usage: python3 task1_4.py [-d] [-m] [-c] [-u] [-l] [-i].")
-    print('''   -d for distribution information,
-                -m for memory information, 
-                -c for CPU information, 
-                -u for user information, 
-                -l for load average information, 
-                -i for IP address''')
+    print("Usage: python3 task1_4.py [-d] [-m] [-c] [-u] [-l] [-i]")
+    print("  -d : distribution information")
+    print("  -m : memory information")
+    print("  -c : CPU information")
+    print("  -u : user information")
+    print("  -l : load average information")
+    print("  -i : IP address")
 
 
 file_args=sys.argv[1:]
 
 for argum in file_args:
     if argum == "-d":
-        print(f"Distribution information:\t\t{platform.system()}, {platform.version()}")
+        if platform.system() == "Darwin":
+            distro = f"MacOS {platform.mac_ver()[0]}"
+            print(f"Distribution information:\t\t{distro}")
+        else:
+            print(f"Distribution information:\t\t{platform.system()}, {platform.version()}")
 
     elif argum == "-m":
         mem=psutil.virtual_memory()
@@ -49,3 +53,8 @@ for argum in file_args:
     elif argum == "-i":
         public_ip = requests.get('https://api.ipify.org', timeout=5).text
         print(f"Public IP is:\t\t\t{public_ip}")
+    else:
+        print(f"Argument {argum} is not valid for this script.")
+        print_usage()
+        sys.exit(1)
+        

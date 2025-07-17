@@ -17,10 +17,10 @@ if not os.path.exists(filename):
 
 with open(filename, "r") as file:
     for line in file:
-        curr_agent = line.split(" -")[0]
-        request_cmd = re.search(r'"\w+ /', line)
+        curr_agent = line.split("\"")[-2]
+        request_cmd = re.search(r'"(\w+) /', line)
         if not request_cmd is None:
-            request_cmd = re.search(r'\w+', request_cmd.group()).group()
+            request_cmd = request_cmd.group(1)
 
         if request_cmd:
             if curr_agent not in list_of_agents.keys():
@@ -35,8 +35,13 @@ with open(filename, "r") as file:
 
 print(f"\nTotal number of unique agents is: {len(list_of_agents.keys())}\n\n")
 
+agent_labels = [f"Agent {key}" for key in list_of_agents]
+max_len = max(len(label) for label in agent_labels)
+
+
 for key, value in list_of_agents.items():
-    output_string=f"Agent {key}"
+    agent_string=f"Agent {key}"
+    output_string= f"{agent_string:<{max_len}}"
     if not value:
         output_string = output_string + f"\t0"
     else:

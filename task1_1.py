@@ -15,5 +15,6 @@ except IndexError:
 if "." not in FILENAME:
     raise ExtensionError(f"Provided filename '{FILENAME}' doesn't contain extension.")
 else:
-    print(f"File extension is .{FILENAME.split('.')[1]}")
+    all_extensions=FILENAME.split('.')[1:]
+    print(f"File extension is .{'.'.join(all_extensions)}")
     
