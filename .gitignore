@@ -1,2 +1,4 @@
 access.log.5
 secrets.txt
+venv/
+.ipynb_checkpoints/

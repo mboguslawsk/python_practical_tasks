@@ -3,15 +3,14 @@
 import sys
 from collections import Counter
 
-list_of_symbols={}
-
 try:
     arg_string=sys.argv[1]
 except IndexError:
-    print("Usage: python3 task1_4.py <string>")
+    print("\nProvide a string as an argument.")
+    print("Usage: python3 task1_4.py <string>\n")
     sys.exit(1)
 
-counter = Counter(list(arg_string))
+counter = Counter(arg_string)
 
 out_string=""
 for key, value in counter.items():

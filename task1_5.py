@@ -6,16 +6,21 @@ import psutil, requests
 
 def print_usage():
     """This function shows usage of this module."""
-    print("Usage: python3 task1_4.py [-d] [-m] [-c] [-u] [-l] [-i]")
+    print("\nUsage: python3 task1_4.py [-d] [-m] [-c] [-u] [-l] [-i]")
     print("  -d : distribution information")
     print("  -m : memory information")
     print("  -c : CPU information")
     print("  -u : user information")
     print("  -l : load average information")
-    print("  -i : IP address")
+    print("  -i : IP address\n")
 
 
 file_args=sys.argv[1:]
+
+if not file_args:
+    print("\nError: Provide arguments to get useful information.")
+    print_usage()
+    sys.exit(1)
 
 for argum in file_args:
     if argum == "-d":
@@ -36,9 +41,10 @@ for argum in file_args:
     elif argum == "-c":
         model_proc=platform.processor()
         cores = psutil.cpu_count(logical=False)
-        freq_current = psutil.cpu_freq().current
-        freq_min = psutil.cpu_freq().min
-        freq_max = psutil.cpu_freq().max
+        freq = psutil.cpu_freq()
+        freq_current = freq.current
+        freq_min = freq.min
+        freq_max = freq.max
         print(f"CPU information:\t\tModel {model_proc}, Cores number {cores}"
               f", Current frequency {freq_current} MHz,")
         print(f"\t\t\t\t Minimum frequency {freq_min} MHz, Maximum Freuency {freq_max}")
